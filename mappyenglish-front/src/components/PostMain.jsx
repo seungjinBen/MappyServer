@@ -32,8 +32,8 @@ function PostMain({placeList = []}){ // 기본값: []
             <Header/>
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '60vh' }}
-          center={{ lat: 48.8584, lng: 2.3545 }}
-          zoom={13}
+          center={{ lat: 49.389, lng: 7.584 }}
+          zoom={4.5}
         >
         {placeList.map(p => (<Marker key={p.id} position={{lat:p.lat, lng:p.lng}} title={p.name}/>))}
         </GoogleMap>

@@ -20,12 +20,12 @@ public class Media {
     @JoinColumn(name = "place_id", nullable = false)
     private Place place;
 
-    @Column(name = "img_url1") private String imgUrl1;
-    @Column(name = "img_url2") private String imgUrl2;
-    @Column(name = "img_url3") private String imgUrl3;
-    @Column(name = "img_url4") private String imgUrl4;
-    @Column(name = "img_url5") private String imgUrl5;
+    @Column(name = "img_url1", length = 300) private String imgUrl1;
+    @Column(name = "img_url2", length = 300) private String imgUrl2;
+    @Column(name = "img_url3", length = 300) private String imgUrl3;
+    @Column(name = "img_url4", length = 300) private String imgUrl4;
+    @Column(name = "img_url5", length = 300) private String imgUrl5;
 
-    @Column(name = "video_url1") private String videoUrl1;
-    @Column(name = "video_url2") private String videoUrl2;
+    @Column(name = "video_url1", length = 300) private String videoUrl1;
+    @Column(name = "video_url2", length = 300) private String videoUrl2;
 }

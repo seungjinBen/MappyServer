@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PostMain from './components/PostMain';
 import PostParis from './components/PostParis';
+import PostLondon from './components/PostLondon';
 import PostAbout from './components/PostAbout';
 // $.ajax와 거의 비슷, 서버에 데이터 요청시 비동기적으로 요청하려고 씀
 
@@ -36,6 +37,8 @@ function App() {
             <Route path='/' element={<PostMain placeList={placeList}/>}/>
             <Route path='/paris' element={<PostParis placeList={placeList}/>}/>
             <Route path="/paris/:id" element={<PostParis placeList={placeList} />} />
+            <Route path='/london' element={<PostLondon placeList={placeList}/>}/>
+            <Route path="/london/:id" element={<PostLondon placeList={placeList} />} />
             <Route path='/about' element={<PostAbout placeList={placeList}/>}/>
         </Routes>
       </BrowserRouter>

@@ -25,15 +25,14 @@ const CATEGORIES = [
   { code: 'E',   label: '기타 시설', className: 'others' },
 ];
 
-function PostParis({ placeList }){
+function PostLondon({ placeList }){
 
     const navigate = useNavigate();
     const { id } = useParams(); // /paris 또는 /paris/:id 모두 대응
     const hasId = Boolean(id);
 
     const mapRef = useRef(null);
-
-    const defaultCenter = useMemo(() => ({ lat: 48.8584, lng: 2.3245 }), []);
+    const defaultCenter = useMemo(() => ({ lat: 51.507, lng: -0.127 }), []);
     const mapOptions = useMemo(
         () => ({
           clickableIcons: false,
@@ -78,7 +77,7 @@ function PostParis({ placeList }){
     const handleMarkerClick = useCallback((p) => {
       setSelectedPlace(p);
       panTo(p.lat, p.lng);
-      navigate(`/paris/${p.id}`);
+      navigate(`/london/${p.id}`);
     }, [navigate, panTo]);
 
     // 지도 빈곳 클릭: 선택 해제 + 라우팅 원복 + 데이터 초기화
@@ -86,27 +85,27 @@ function PostParis({ placeList }){
       setSelectedPlace(null);
       setConversations([]);
       setConvError(null);
-      navigate('/paris');
+      navigate('/london');
     }, [navigate]);
 
     // 수정
-    const parisPlaceList = useMemo(() => {
-          // city_id가 숫자 1이라고 가정
-          return (placeList || []).filter(p => p.cityId === 1);
+    const londonPlaceList = useMemo(() => {
+          // city_id가 숫자 3이라고 가정
+          return (placeList || []).filter(p => p.cityId === 3);
     }, [placeList]);
 
     // 수정
     // 현재 카테고리에 맞는 장소만 계산
     const filteredPlaces = useMemo(() => {
-      if (category === 'ALL') return parisPlaceList;
-      return parisPlaceList.filter((p) => String(p.category) === category);
-    }, [parisPlaceList, category]);
+      if (category === 'ALL') return londonPlaceList;
+      return londonPlaceList.filter((p) => String(p.category) === category);
+    }, [londonPlaceList, category]);
 
     // 카테고리 바뀔 때 선택 장소/URL 정리 (필터에서 빠지면 해제)
     useEffect(() => {
       if (selectedPlace && category !== 'ALL' && String(selectedPlace.category) !== category) {
         setSelectedPlace(null);
-        navigate('/paris');
+        navigate('/london');
       }
     }, [category, selectedPlace, navigate]);
 
@@ -116,7 +115,7 @@ function PostParis({ placeList }){
       if (!id) return;
       const placeId = Number(id);
 
-      const p = parisPlaceList.find((x) => Number(x.id) === placeId);
+      const p = londonPlaceList.find((x) => Number(x.id) === placeId);
       if (p) {
         setSelectedPlace(p);
         panTo(p.lat, p.lng);
@@ -142,7 +141,7 @@ function PostParis({ placeList }){
         }
       };
       fetchConversations();
-    }, [id, parisPlaceList, panTo, category]); // 수정
+    }, [id, londonPlaceList, panTo, category]); // 수정
 
     if (loadError) return <div>지도를 불러오는 중 오류가 발생했습니다.</div>;
     if (!isLoaded) return <div>지도 로딩 중…</div>;
@@ -208,7 +207,7 @@ function PostParis({ placeList }){
                             open={open}
                             onOpen={() => setOpen(true)}
                             onClose={() => setOpen(false)}
-                            title="파리의 대표장소"
+                            title="런던의 대표장소"
                             peekHeight='32vh'   // 닫혀 있어도 카드 상단이 넉넉히 보이도록
                             halfHeight = '50vh'
                             fullHeight = '90vh'
@@ -225,8 +224,8 @@ function PostParis({ placeList }){
 }
 
 // [수정] 프롭 기본값 설정 (컴포넌트 밖이나 내부에서 구조분해할당 시)
-PostParis.defaultProps = {
+PostLondon.defaultProps = {
   placeList: []
 };
 
-export default PostParis;
+export default PostLondon;

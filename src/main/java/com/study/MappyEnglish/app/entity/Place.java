@@ -23,6 +23,9 @@ public class Place {
     @Column(columnDefinition = "text")
     private String description;
 
+    @Column(name = "city_id")
+    private Long cityId;
+
     // URL은 길이가 길 수 있어 보통 2048 정도로
     @Column(name = "img_url", length = 2048)
     private String imgUrl;
@@ -42,6 +45,8 @@ public class Place {
     public void setLng(Double lng){ this.lng = lng; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public Long getcityId(){ return cityId; }
+    public void setcityId(Long cityId){ this.cityId = cityId; }
     public String getImgUrl() { return imgUrl; }
     public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
 }
