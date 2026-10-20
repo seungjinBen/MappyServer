@@ -38,6 +38,6 @@ out/
 
 ### Secrets (never commit) ###
 src/main/resources/firebase-key.json
-src/main/resources/application-prod.properties
 src/main/resources/application-secret.properties
 **/.env
+deploy/.env.prod

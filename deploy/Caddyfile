@@ -1,0 +1,9 @@
+# /etc/caddy/Caddyfile
+# 설치: sudo cp deploy/Caddyfile /etc/caddy/Caddyfile && sudo systemctl reload caddy
+# Let's Encrypt 인증서 자동 발급·갱신 — DNS의 api A레코드가 이 서버를 가리켜야 발급됨
+# (프론트가 호출하는 API 도메인에 맞게 수정)
+
+api.mappyenglish.com {
+	reverse_proxy localhost:8080
+	encode gzip
+}

@@ -47,6 +47,26 @@ cp src/main/resources/application-secret.properties.example src/main/resources/a
 
 운영 환경에서는 같은 이름의 환경변수로 주입하면 됩니다.
 
+## 배포
+
+`main` 에 푸시하면 GitHub Actions(`.github/workflows/deploy.yml`)가 jar를 빌드해 서버로 복사하고 systemd 서비스를 재시작한 뒤 `/api/ping` 헬스체크로 성공 여부를 판정합니다. 푸시되지 않은 코드는 운영에 올라갈 수 없습니다.
+
+```
+git push origin main
+  └─ Actions: gradle build → scp app.jar → systemctl restart mappyenglish → curl /api/ping
+```
+
+서버 최초 세팅은 `deploy/` 폴더 참고:
+
+| 파일 | 용도 |
+|---|---|
+| `deploy/setup-server.sh` | Ubuntu 서버 1회 초기화 (Java 17, Caddy, 스왑, 전용 실행 계정) |
+| `deploy/mappyenglish.service` | systemd 유닛. `/home/ubuntu/app/.env` 를 EnvironmentFile 로 읽음 |
+| `deploy/.env.prod.example` | 서버 `.env` 템플릿 (DB, JWT, OpenAI, Kakao, Firebase 키 base64) |
+| `deploy/Caddyfile` | HTTPS 리버스 프록시 |
+
+GitHub 리포 Secrets: `SERVER_HOST`, `SERVER_SSH_KEY`
+
 ## 프론트엔드
 
 Next.js로 별도 저장소에서 관리합니다. (초기 CRA 버전은 이 저장소 이력에서 제거)
