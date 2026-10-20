@@ -1,3 +1,8 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
+# 서버로 scp 되는 파일은 Windows에서도 LF 유지 (CRLF면 bash/systemd가 깨짐)
+*.sh text eol=lf
+*.service text eol=lf
+deploy/Caddyfile text eol=lf
+deploy/.env* text eol=lf
