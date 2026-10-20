@@ -8,6 +8,8 @@ public class ConversationDto implements Serializable {
 
     private Long id;
     private Character type;
+    private String category;
+    private String section;
     private PlaceBriefDto place;      // ← Place 요약 정보
     private List<LineDto> lines = new ArrayList<>();
 
@@ -18,6 +20,12 @@ public class ConversationDto implements Serializable {
 
     public Character getType() { return type; }
     public void setType(Character type) { this.type = type; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public String getSection() { return section; }
+    public void setSection(String section) { this.section = section; }
 
     public PlaceBriefDto getPlace() { return place; }
     public void setPlace(PlaceBriefDto place) { this.place = place; }

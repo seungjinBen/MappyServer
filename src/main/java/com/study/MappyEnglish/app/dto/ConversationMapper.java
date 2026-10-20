@@ -15,6 +15,7 @@ public class ConversationMapper {
         ConversationDto dto = new ConversationDto();
         dto.setId(e.getId());
         dto.setType(e.getType());
+        dto.setCategory(e.getCategory());
 
         Place p = e.getPlace(); // LAZY - 접근 시 쿼리 발생 (fetch join으로 최적화 가능)
         if (p != null) {

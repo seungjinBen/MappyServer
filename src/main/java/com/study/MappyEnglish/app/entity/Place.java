@@ -30,6 +30,12 @@ public class Place {
     @Column(name = "img_url", length = 2048)
     private String imgUrl;
 
+    @Column(name = "stage")
+    private Integer stage;
+
+    @Column(name = "english_text", columnDefinition = "text")
+    private String englishText;
+
     // 기본 생성자 + getter/setter
     public Place() {}
     // getters/setters...
@@ -49,4 +55,10 @@ public class Place {
     public void setcityId(Long cityId){ this.cityId = cityId; }
     public String getImgUrl() { return imgUrl; }
     public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
+
+    public Integer getStage(){ return stage; }
+    public void setStage(Integer stage){ this.stage = stage; }
+
+    public String getEnglishText() { return englishText; }
+    public void setEnglishText(String englishText) { this.englishText = englishText; }
 }
