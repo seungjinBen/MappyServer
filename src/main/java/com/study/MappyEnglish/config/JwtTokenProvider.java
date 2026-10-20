@@ -43,6 +43,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .subject(authentication.getName()) // 사용자 email
                 .claim("auth", authorities) // 권한
+                .claim("role", authorities)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(key)

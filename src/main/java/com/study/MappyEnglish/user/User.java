@@ -13,10 +13,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users") // 'user'는 PostgreSQL 예약어일 수 있으므로 'users' 사용
+@Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails { // UserDetails 상속 (Spring Security 필수)
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,49 +26,47 @@ public class User implements UserDetails { // UserDetails 상속 (Spring Securit
     private String email;
 
     @Column(nullable = false)
-    private String password; // 해시된 비밀번호 저장
+    private String password;
 
-    // (선택) 사용자 이름
     @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
+    private String authProvider;
+
+    @Column(nullable = false)
+    private String role = "ROLE_USER";
+
     @Builder
-    public User(String email, String password, String username) {
+    public User(String email, String password, String username, String authProvider) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.authProvider = (authProvider != null) ? authProvider : "LOCAL";
+        if (role != null) {
+            this.role = role;
+        }
     }
-
-    // === UserDetails 인터페이스 구현 ===
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // (간단하게 'ROLE_USER' 권한 부여)
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(this.role));
     }
 
     @Override
     public String getUsername() {
-        return email; // Spring Security에서 'username'으로 사용할 필드 (email 사용)
+        return email;
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true; // 계정 만료 여부
-    }
+    public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return true; // 계정 잠금 여부
-    }
+    public boolean isAccountNonLocked() { return true; }
 
     @Override
-    public boolean isCredentialsNonExpired() {
-        return true; // 비밀번호 만료 여부
-    }
+    public boolean isCredentialsNonExpired() { return true; }
 
     @Override
-    public boolean isEnabled() {
-        return true; // 계정 활성화 여부
-    }
+    public boolean isEnabled() { return true; }
 }

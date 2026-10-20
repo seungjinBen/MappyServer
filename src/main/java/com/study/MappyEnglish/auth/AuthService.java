@@ -59,4 +59,14 @@ public class AuthService {
 
         return new TokenResponse(token);
     }
+
+    @Transactional
+    public void deleteUser(String email) {
+        // 1. 이메일로 DB에서 유저 찾기
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+
+        // 2. 유저 데이터 최종 삭제
+        userRepository.delete(user);
+    }
 }
