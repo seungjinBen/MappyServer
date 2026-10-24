@@ -20,11 +20,13 @@ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' \
   | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt-get update && sudo apt-get install -y caddy
 
-echo "=== 4. VM 내부 방화벽 개방 (Oracle Cloud는 Security List 외에 iptables도 막혀 있음, EC2는 무해) ==="
-if command -v iptables >/dev/null; then
-  sudo iptables -I INPUT 5 -p tcp --dport 80 -j ACCEPT
-  sudo iptables -I INPUT 6 -p tcp --dport 443 -j ACCEPT
-  sudo apt-get install -y iptables-persistent && sudo netfilter-persistent save || true
+echo "=== 4. VM 내부 방화벽 개방 (Oracle Cloud 전용 — EC2는 보안 그룹으로 제어하므로 건너뜀) ==="
+if sudo iptables -S INPUT 2>/dev/null | grep -q -- "-j REJECT"; then
+  sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+  sudo iptables -I INPUT -p tcp --dport 443 -j ACCEPT
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent >/dev/null && sudo netfilter-persistent save || true
+else
+  echo "(REJECT 규칙 없음 → 건너뜀)"
 fi
 
 echo "=== 5. 스왑 2G (소형 인스턴스 OOM 보험) ==="
