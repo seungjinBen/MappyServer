@@ -41,3 +41,4 @@ src/main/resources/firebase-key.json
 src/main/resources/application-secret.properties
 **/.env
 deploy/.env.prod
+deploy/backup/
